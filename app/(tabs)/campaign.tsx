@@ -1,0 +1,15 @@
+import React from 'react';
+import { View } from 'react-native';
+import { Typography } from '../../src/components/Typography';
+import AppLayout from '../../src/components/Layouts';
+
+export default function () {
+  return (
+    <AppLayout headerProps={{ variant: { type: 'basic', title: 'Campaign' } }}>
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <Typography variant="h2">Campaign Module</Typography>
+        <Typography variant="body1" style={{ marginTop: 10 }}>Coming Soon...</Typography>
+      </View>
+    </AppLayout>
+  );
+}
