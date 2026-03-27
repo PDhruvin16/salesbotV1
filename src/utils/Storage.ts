@@ -1,6 +1,18 @@
-import { createMMKV } from 'react-native-mmkv';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const mmkvStorage = createMMKV();
+// Provide a synchronous in-memory cache to maintain compatibility with existing components
+const memoryCache: Map<string, string> = new Map();
+
+// Fire-and-forget hydration of cache from AsyncStorage on boot
+AsyncStorage.getAllKeys().then((keys) => {
+  if (keys.length > 0) {
+    AsyncStorage.multiGet(keys).then((pairs) => {
+      pairs.forEach(([key, val]) => {
+        if (val !== null) memoryCache.set(key, val);
+      });
+    });
+  }
+}).catch(console.error);
 
 export const StorageKeys = {
   accessToken: 'authToken',
@@ -23,91 +35,110 @@ function safeParse<T>(value: string | undefined): T | null {
 }
 
 export const storage = {
+  // === REDUX PERSIST COMPATIBLE METHODS ===
+  setItem: (key: string, value: string): Promise<void> => {
+    memoryCache.set(key, value);
+    return AsyncStorage.setItem(key, value);
+  },
+  getItem: (key: string): Promise<string | null> => {
+    return AsyncStorage.getItem(key);
+  },
+  removeItem: (key: string): Promise<void> => {
+    memoryCache.delete(key);
+    return AsyncStorage.removeItem(key);
+  },
+
+  // === LEGACY SYNCHRONOUS METHODS ===
   setString(key: StorageKey, value: string): void {
-    mmkvStorage.set(key, value);
+    memoryCache.set(key, value);
+    AsyncStorage.setItem(key, value).catch(console.error);
   },
 
   getString(key: StorageKey): string | undefined {
-    return mmkvStorage.getString(key);
+    return memoryCache.get(key);
   },
 
   setJSON<T>(key: StorageKey, value: T): void {
-    mmkvStorage.set(key, JSON.stringify(value));
+    const stringValue = JSON.stringify(value);
+    memoryCache.set(key, stringValue);
+    AsyncStorage.setItem(key, stringValue).catch(console.error);
   },
 
   getJSON<T>(key: StorageKey): T | null {
-    const raw = mmkvStorage.getString(key);
+    const raw = memoryCache.get(key);
     return safeParse<T>(raw);
   },
 
-  // ✅ CORRECT - Use remove() instead of delete()
   remove(key: StorageKey): boolean {
-    return mmkvStorage.remove(key); // Returns true if removed
+    const existed = memoryCache.has(key);
+    memoryCache.delete(key);
+    AsyncStorage.removeItem(key).catch(console.error);
+    return existed;
   },
 
   clear(): void {
-    mmkvStorage.clearAll();
+    memoryCache.clear();
+    AsyncStorage.clear().catch(console.error);
   },
 
   keys(): readonly string[] {
-    return mmkvStorage.getAllKeys();
+    return Array.from(memoryCache.keys());
   },
 
   multiRemove(keys: StorageKey[]): void {
-    keys.forEach((key) => mmkvStorage.remove(key)); // ✅ remove() not delete()
+    keys.forEach((key) => memoryCache.delete(key));
+    AsyncStorage.multiRemove(keys).catch(console.error);
   },
 
   multiSetString(entries: Array<[StorageKey, string]>): void {
-    entries.forEach(([key, value]) => mmkvStorage.set(key, value));
+    entries.forEach(([key, value]) => memoryCache.set(key, value));
+    AsyncStorage.multiSet(entries).catch(console.error);
   },
 
   setTokens(tokens: { access: string; refresh: string }): void {
-    mmkvStorage.set(StorageKeys.accessToken, tokens.access);
-    mmkvStorage.set(StorageKeys.refreshToken, tokens.refresh);
+    this.setString(StorageKeys.accessToken, tokens.access);
+    this.setString(StorageKeys.refreshToken, tokens.refresh);
   },
 
   getAccessToken(): string | undefined {
-    return mmkvStorage.getString(StorageKeys.accessToken);
+    return this.getString(StorageKeys.accessToken);
   },
 
   getRefreshToken(): string | undefined {
-    return mmkvStorage.getString(StorageKeys.refreshToken);
+    return this.getString(StorageKeys.refreshToken);
   },
 
-  // ✅ CORRECT clearAuth
   clearAuth(): void {
-    mmkvStorage.remove(StorageKeys.accessToken);
-    mmkvStorage.remove(StorageKeys.refreshToken);
-    mmkvStorage.remove(StorageKeys.user);
+    this.remove(StorageKeys.accessToken);
+    this.remove(StorageKeys.refreshToken);
+    this.remove(StorageKeys.user);
   },
 
   setUser<T extends object = any>(user: T): void {
-    mmkvStorage.set(StorageKeys.user, JSON.stringify(user));
+    this.setJSON(StorageKeys.user, user);
   },
 
   getUser<T extends object = any>(): T | null {
-    const raw = mmkvStorage.getString(StorageKeys.user);
-    return safeParse<T>(raw);
+    return this.getJSON<T>(StorageKeys.user);
   },
 
   updateUserPartial<T extends object = any>(partial: Partial<T>): T | null {
-    const current = storage.getUser<T>() || ({} as T);
+    const current = this.getUser<T>() || ({} as T);
     const updated = { ...current, ...partial } as T;
-    storage.setUser<T>(updated);
+    this.setUser<T>(updated);
     return updated;
   },
 
-  // Additional MMKV helpers
   contains(key: StorageKey): boolean {
-    return mmkvStorage.contains(key);
+    return memoryCache.has(key);
   },
 
   trim(): void {
-    mmkvStorage.trim();
+    // No-op for AsyncStorage
   },
 
   getSize(): number {
-    return mmkvStorage.size;
+    return memoryCache.size; // rough estimate
   },
 };
 

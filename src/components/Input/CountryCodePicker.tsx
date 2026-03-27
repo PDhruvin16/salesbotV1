@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { View, TouchableOpacity, Modal, FlatList, StyleSheet, Pressable } from 'react-native';
 import { Typography } from '../Typography';
-import { COUNTRIES, Country } from '../../utils/countries';
-import { useTheme } from '../../hooks/ThemeContext';
+import { COUNTRIES, Country } from './countries';
+
+import { useTheme } from '../../context/ThemeContext';
 import { getThemeColors } from '../../utils/colors';
 import { moderateScale } from '../../utils/responsive';
 import { ChevronDown } from 'lucide-react-native';

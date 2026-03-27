@@ -14,7 +14,7 @@ import LinearGradient from "react-native-linear-gradient";
 import CustomButton from "../../../components/Button";
 import Loader from "../../../components/Loader";
 import { Typography } from "../../../components/Typography";
-import { useTheme } from "../../../hooks/ThemeContext";
+import { useTheme } from "../../../context/ThemeContext";
 import { useAuth } from "../../../hooks/useAuth";
 import colors, { getThemeColors } from "../../../utils/colors";
 import styles from "./VerificationStyle";

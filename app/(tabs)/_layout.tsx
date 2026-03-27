@@ -14,14 +14,14 @@ import Animated, {
 } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Typography } from '../../src/components/Typography';
-import { TabProvider } from '../../src/hooks/TabContext';
-import { useTheme } from '../../src/hooks/ThemeContext';
+import { TabProvider } from '../../src/context/TabContext';
+import { useTheme } from '../../src/context/ThemeContext';
 import { getThemeColors } from '../../src/utils/colors';
 import { normalize } from '../../src/utils/responsive';
 
 // Components
 import Sidebar from '../../src/components/Sidebar/Sidebar';
-import getStyles from '../../src/navigation/BottomTabStyles';
+import getStyles from '../../src/components/BottomTabBar/styles';
 
 const GlassViewAny = GlassView as any;
 const AnimatedGlassViewAny = Animated.createAnimatedComponent(GlassViewAny);

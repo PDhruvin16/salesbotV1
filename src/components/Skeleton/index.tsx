@@ -9,7 +9,7 @@ import Animated, {
   interpolate,
 } from 'react-native-reanimated';
 import LinearGradient from 'react-native-linear-gradient';
-import { useTheme } from '../../hooks/ThemeContext';
+import { useTheme } from '../../context/ThemeContext';
 import { getThemeColors } from '../../utils/colors';
 import { screenWidth } from '../../utils/responsive';
 

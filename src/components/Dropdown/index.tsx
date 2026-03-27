@@ -18,7 +18,7 @@ import { Typography } from '../Typography';
 import { moderateScale } from '../../utils/responsive';
 import { ChevronDown, Check, X, Search, Plus } from 'lucide-react-native';
 import { TextInput } from 'react-native';
-import { useTheme } from '../../hooks/ThemeContext';
+import { useTheme } from '../../context/ThemeContext';
 import { getThemeColors, ThemeColors } from '../../utils/colors';
 
 const windowHeight = Dimensions.get('window').height;

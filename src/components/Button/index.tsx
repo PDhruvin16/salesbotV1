@@ -13,7 +13,7 @@ import { FONTS } from '../../utils';
 import colors from '../../utils/colors';
 import { normalize, moderateScale } from '../../utils/responsive';
 import LinearGradient from 'react-native-linear-gradient';
-import { useTheme } from '../../hooks/ThemeContext';
+import { useTheme } from '../../context/ThemeContext';
 import { getThemeColors } from '../../utils/colors';
 
 // Add customColors prop to ButtonProps

@@ -9,7 +9,7 @@ import Animated, {
 } from 'react-native-reanimated';
 
 import { LoadingProps } from '../../types/components';
-import { useTheme } from '../../hooks/ThemeContext';
+import { useTheme } from '../../context/ThemeContext';
 import { getThemeColors } from '../../utils/colors';
 
 const Loader: React.FC<LoadingProps> = ({

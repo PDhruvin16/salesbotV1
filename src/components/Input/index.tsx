@@ -10,7 +10,7 @@ import {
   View,
   ViewStyle,
 } from 'react-native';
-import { useTheme } from '../../hooks/ThemeContext';
+import { useTheme } from '../../context/ThemeContext';
 import { InputProps } from '../../types/components';
 import { getThemeColors, ThemeColors } from '../../utils/colors';
 import { moderateScale } from '../../utils/responsive';

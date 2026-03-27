@@ -1,5 +1,5 @@
 import { Platform } from "react-native";
-import { TAB_BAR_HEIGHT } from "../navigation/BottomTabStyles";
+import { TAB_BAR_HEIGHT } from "../components/BottomTabBar/styles";
 import { normalize } from "./responsive";
 
 /**

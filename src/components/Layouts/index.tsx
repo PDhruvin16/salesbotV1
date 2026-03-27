@@ -2,7 +2,7 @@ import React, { ReactNode, useMemo } from 'react';
 import { View, StyleSheet, StatusBar, Platform } from 'react-native';
 import CustomHeader, { CustomHeaderProps } from '../Header';
 import { getThemeColors } from '../../utils/colors';
-import { useTheme } from '../../hooks/ThemeContext';
+import { useTheme } from '../../context/ThemeContext';
 
 /**
  * App layout: header, gradient bar, and content area.

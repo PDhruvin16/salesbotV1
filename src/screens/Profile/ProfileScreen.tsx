@@ -21,12 +21,11 @@ import {
 import React, { useMemo } from "react";
 import { ScrollView, Switch, TouchableOpacity, View } from "react-native";
 import LinearGradient from 'react-native-linear-gradient';
-import { AppStackParamList } from "../../navigation/AppNavigator";
 import CustomButton from "../../components/Button";
 import { CustomHeaderProps } from "../../components/Header";
 import AppLayout from "../../components/Layouts";
 import { Typography } from "../../components/Typography";
-import { useTheme } from "../../hooks/ThemeContext";
+import { useTheme } from "../../context/ThemeContext";
 import { useAuth } from "../../hooks/useAuth";
 import { getThemeColors } from "../../utils/colors";
 import { normalize } from "../../utils/responsive";
@@ -40,8 +39,7 @@ const ProfileScreen: React.FC = () => {
   const styles = useMemo(() => getStyles(themeColors), [themeColors]);
   const { user, logout } = useAuth();
   const userData = user as AuthUser | null;
-  const navigation =
-    useNavigation<StackNavigationProp<AppStackParamList, "Profile">>();
+  const navigation = useNavigation();
 
   const headerProps: CustomHeaderProps = {
     variant: { type: "basic", title: "Profile" },

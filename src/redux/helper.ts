@@ -1,5 +1,11 @@
-import { useSelector } from "react-redux";
-import { persistor, store, type RootState } from "./store";
+import { useDispatch, useSelector, TypedUseSelectorHook } from "react-redux";
+import { persistor, store, type RootState, type AppDispatch } from "./store";
+
+// Typed useSelector hook
+export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
+
+// Typed useDispatch hook
+export const useAppDispatch = () => useDispatch<AppDispatch>();
 import moment from "moment";
 import { clearAuthData, setAuthData } from "./slices/authSlice";
 import { setViewMode } from "./slices/viewModeSlice";

@@ -2,7 +2,7 @@ import { Clock3 } from "lucide-react-native";
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import { Typography } from "../../components/Typography";
-import { useTheme } from "../../hooks/ThemeContext";
+import { useTheme } from "../../context/ThemeContext";
 import { getThemeColors } from "../../utils/colors";
 import { normalize } from "../../utils/responsive";
 

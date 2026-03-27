@@ -19,7 +19,7 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    setAuthData: (state, action: PayloadAction<Partial<AuthState>>) => {
+    setAuthData: (state, action: PayloadAction<AuthState>) => {
       return { ...state, ...action.payload };
     },
     clearAuthData: () => {

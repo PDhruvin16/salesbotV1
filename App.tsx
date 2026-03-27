@@ -1,33 +1,13 @@
-// import { StatusBar } from 'expo-status-bar';
-// import { StyleSheet, Text, View } from 'react-native';
-
-// export default function App() {
-//   return (
-//     <View style={styles.container}>
-//       <Text>Open up App.tsx to start working on your app!</Text>
-//       <StatusBar style="auto" />
-//     </View>
-//   );
-// }
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     backgroundColor: '#fff',
-//     alignItems: 'center',
-//     justifyContent: 'center',
-//   },
-// });
 import React from 'react';
-import AppProviders from './src/lib/AppProviders';
-import RootNavigator from './src/navigation/RootNavigator';
-import { useAuthStatus } from './src/hooks/useAuth';
+import { View, Text } from 'react-native';
 
 export default function App() {
-  const { isAuthenticated } = useAuthStatus();
+  // This file is ignored by Expo Router.
+  // The entrypoint is `app/_layout.tsx` because `main` is set to `index.ts`
+  // which imports `expo-router/entry`.
   return (
-    <AppProviders>
-      <RootNavigator isAuthenticated={isAuthenticated} />;
-    </AppProviders>
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Text>SalesBot loaded via Expo Router.</Text>
+    </View>
   );
 }

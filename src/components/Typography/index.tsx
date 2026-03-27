@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text, TextStyle, TextProps } from 'react-native';
 import { getThemeColors } from '../../utils/colors';
-import { useTheme } from '../../hooks/ThemeContext';
+import { useTheme } from '../../context/ThemeContext';
 import { FONT_FAMILY, FONT_SIZE, LETTER_SPACING, LINE_HEIGHT } from '../../utils';
 
 import { moderateScale } from '../../utils/responsive';

@@ -1,5 +1,5 @@
 import { Dimensions, Platform, StyleSheet } from "react-native";
-import { normalize } from "../utils/responsive";
+import { normalize } from "../../utils/responsive";
 
 const { width: SCREEN_WIDTH } = Dimensions.get("window");
 
@@ -9,11 +9,7 @@ const TAB_BAR_HEIGHT = normalize(64);
 const MORE_BUTTON_WIDTH = normalize(64);
 const TAB_COUNT = 4; // Home, Leads, ActiveUtility, Contacts
 const TAB_WIDTH = (TAB_BAR_WIDTH - MORE_BUTTON_WIDTH) / TAB_COUNT;
-const TAB_CENTER_OFFSET = MORE_BUTTON_WIDTH / 2 - TAB_BAR_WIDTH / 2; // This is actually complex, let's simplify.
-// Re-calculating for BottomTabNavigator logic:
-// translateX.value starts from TAB_CENTER_OFFSET
-// In BottomTabNavigator: TAB_CENTER_OFFSET + index * TAB_WIDTH
-// The pill should be centered on the tab.
+const TAB_CENTER_OFFSET = MORE_BUTTON_WIDTH / 2 - TAB_BAR_WIDTH / 2;
 
 export const getStyles = (themeColors: any) =>
   StyleSheet.create({
@@ -36,7 +32,7 @@ export const getStyles = (themeColors: any) =>
       left: HORIZONTAL_MARGIN,
       width: TAB_BAR_WIDTH,
       height: TAB_BAR_HEIGHT,
-      borderRadius: normalize(32), // More "liquid" rounded corners
+      borderRadius: normalize(32),
       flexDirection: "row",
       alignItems: "center",
       borderWidth: 1.5,
@@ -77,7 +73,6 @@ export const getStyles = (themeColors: any) =>
       paddingHorizontal: normalize(14),
       borderRadius: normalize(20),
       gap: normalize(6),
-      // No minWidth here, let padding dictate the "space"
     },
     tabLabel: {
       fontSize: normalize(12),
@@ -130,7 +125,7 @@ export const getStyles = (themeColors: any) =>
       shadowOpacity: 0.4,
       shadowRadius: 10,
       elevation: 12,
-      overflow: 'hidden', // Required for absolute gradient clipping
+      overflow: 'hidden',
     },
     specialButtonIconContainer: {
       alignItems: "center",

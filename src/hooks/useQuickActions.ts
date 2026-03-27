@@ -1,8 +1,7 @@
 import { useEffect } from 'react';
 import { DeviceEventEmitter, NativeModules, Platform } from 'react-native';
 import QuickActions from 'react-native-quick-actions';
-import { navigate, navigationRef } from '../navigation/navigationRef';
-import { AppStackParamList } from '../navigation/AppNavigator';
+import { router } from 'expo-router';
 
 type QuickActionType = 'AddLead' | 'OpenChats';
 
@@ -30,17 +29,13 @@ const QUICK_ACTIONS = [
   },
 ];
 
-// Module-level helper — stable reference, no closure issues
 const isQuickActionsAvailable = (): boolean =>
   Platform.OS === 'ios' ? !!NativeModules.RNQuickActionManager : !!NativeModules.ReactAppShortcuts;
 
 export const useQuickActions = (isAuthenticated: boolean): void => {
-  // Register shortcuts once on mount — no deps needed
   useEffect(() => {
     if (!isQuickActionsAvailable()) {
-      console.warn(
-        'QuickActions: Native module not found. Rebuild the app and ensure native modules are linked.',
-      );
+      console.warn('QuickActions: Native module not found.');
       return;
     }
 
@@ -51,22 +46,8 @@ export const useQuickActions = (isAuthenticated: boolean): void => {
     }
   }, []);
 
-  // Handle quick action events — re-runs when auth state changes
   useEffect(() => {
     if (!isQuickActionsAvailable()) return;
-
-    // All helpers defined INSIDE the effect so dep array [isAuthenticated] is exhaustive
-    const navigateWhenReady = (screen: keyof AppStackParamList): void => {
-      if (navigationRef.isReady()) {
-        navigate(screen as Parameters<typeof navigate>[0]);
-        return;
-      }
-      setTimeout(() => {
-        if (navigationRef.isReady()) {
-          navigate(screen as Parameters<typeof navigate>[0]);
-        }
-      }, 300);
-    };
 
     const isQuickActionValid = (action: unknown): action is QuickActionData =>
       typeof action === 'object' &&
@@ -79,15 +60,14 @@ export const useQuickActions = (isAuthenticated: boolean): void => {
 
       switch (data.type) {
         case 'AddLead':
-          navigateWhenReady('Leads');
+          router.push('/(tabs)/leads');
           break;
         case 'OpenChats':
-          navigateWhenReady('Conversations');
+          router.push('/(tabs)/conversations');
           break;
       }
     };
 
-    // Cold start (app opened via quick action)
     QuickActions.popInitialAction()
       .then((action) => {
         if (action && isQuickActionValid(action)) {
@@ -96,7 +76,6 @@ export const useQuickActions = (isAuthenticated: boolean): void => {
       })
       .catch(() => {});
 
-    // Background / foreground (app already running)
     const listener = DeviceEventEmitter.addListener('quickActionShortcut', (action: unknown) => {
       if (isQuickActionValid(action)) {
         handleAction(action);
@@ -106,5 +85,5 @@ export const useQuickActions = (isAuthenticated: boolean): void => {
     return () => {
       listener.remove();
     };
-  }, [isAuthenticated]); // ✅ exhaustive — handleAction defined inside, captures isAuthenticated directly
+  }, [isAuthenticated]);
 };

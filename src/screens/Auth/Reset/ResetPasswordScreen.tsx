@@ -9,13 +9,13 @@ import {
   View,
 } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
-import { setCredentials } from "../../../redux/slices/authSlice";
+import { setAuthData } from "../../../redux/slices/authSlice";
 import CustomButton from "../../../components/Button";
 import CustomInput from "../../../components/Input";
 import Loader from "../../../components/Loader";
 import { Typography } from "../../../components/Typography";
-import { useTheme } from "../../../hooks/ThemeContext";
-import { useAppDispatch } from "../../../hooks/useRedux";
+import { useTheme } from "../../../context/ThemeContext";
+import { useAppDispatch } from "../../../redux/helper";
 import authApi from "../../../lib/authApi";
 import { getThemeColors } from "../../../utils/colors";
 import { extractErrorMessage } from "../../../utils/errorMessageExtractor";

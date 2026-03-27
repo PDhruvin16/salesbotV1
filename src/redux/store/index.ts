@@ -3,7 +3,7 @@ import authReducer from "../slices/authSlice";
 import permissionReducer from "../slices/permissionSlice";
 import notificationReducer from "../slices/notificationSlice";
 import previewReducer from "../slices/previewSlice";
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import storageEngine from "../../utils/Storage";
 
 import {
   persistStore,
@@ -16,24 +16,24 @@ import {
   REGISTER,
 } from "redux-persist";
 
-// Define persist configurations for each slice using AsyncStorage for React Native
+// Define persist configurations for each slice using our new Custom Storage engine
 const authPersistConfig = {
   key: "auth",
-  storage: AsyncStorage,
+  storage: storageEngine,
 };
 const permissionPersistConfig = {
   key: "permission",
-  storage: AsyncStorage,
+  storage: storageEngine,
 };
 
 const previewPersistConfig = {
   key: "previewToken",
-  storage: AsyncStorage,
+  storage: storageEngine,
 };
 
 const notificationPersistConfig = {
   key: "notification",
-  storage: AsyncStorage,
+  storage: storageEngine,
 };
 
 export const store = configureStore({

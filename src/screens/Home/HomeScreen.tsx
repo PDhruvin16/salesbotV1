@@ -13,8 +13,8 @@ import Loader from "../../components/Loader";
 import Skeleton from "../../components/Skeleton";
 import Popup from "../../components/Popup";
 import CustomDropdown from "../../components/Dropdown";
-import ActionSheet from "../../components/ActionSheet";
-import { useTheme } from "../../hooks/ThemeContext";
+import AppBottomSheet from "../../components/BottomSheet";
+import { useTheme } from "../../context/ThemeContext";
 import { useAuth } from "../../hooks/useAuth";
 import { User as AuthUser } from "../../lib/authApi";
 import { getThemeColors } from "../../utils/colors";
@@ -326,7 +326,7 @@ const HomeScreen: React.FC = () => {
         onClose={() => setPopupVisible(false)}
       />
 
-      <ActionSheet
+      <AppBottomSheet
         visible={isActionSheetVisible}
         onClose={() => setActionSheetVisible(false)}
         title="Sample Action Sheet"

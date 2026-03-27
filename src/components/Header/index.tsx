@@ -9,7 +9,7 @@ import Animated, {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Bell, ChevronLeft, Search } from 'lucide-react-native';
 import colors, { getThemeColors, ThemeColors } from '../../utils/colors';
-import { useTheme } from '../../hooks/ThemeContext';
+import { useTheme } from '../../context/ThemeContext';
 
 import { normalize } from '../../utils/responsive';
 import LinearGradient from 'react-native-linear-gradient';

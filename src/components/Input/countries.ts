@@ -18,10 +18,8 @@ export const COUNTRIES: Country[] = [
   { code: 'JP', name: 'Japan', dialCode: '+81', flag: '🇯🇵' },
 ];
 
-export const getCountryByDialCode = (dialCode: string): Country | undefined => {
-  return COUNTRIES.find((c) => c.dialCode === dialCode);
-};
+export const getCountryByDialCode = (dialCode: string): Country | undefined =>
+  COUNTRIES.find((c) => c.dialCode === dialCode);
 
-export const getCountryByCode = (code: string): Country | undefined => {
-  return COUNTRIES.find((c) => c.code === code);
-};
+export const getCountryByCode = (code: string): Country | undefined =>
+  COUNTRIES.find((c) => c.code === code);

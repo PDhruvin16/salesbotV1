@@ -3,7 +3,7 @@ import { View, StyleSheet, TouchableOpacity, Platform } from 'react-native';
 import Animated, { FadeInDown } from 'react-native-reanimated';
 import { MessageSquare, Megaphone, BookOpen, Settings, Users, Package } from 'lucide-react-native';
 import { getThemeColors, ThemeColors } from '../../utils/colors';
-import { useTheme } from '../../hooks/ThemeContext';
+import { useTheme } from '../../context/ThemeContext';
 import { Typography } from '../Typography';
 import LinearGradient from 'react-native-linear-gradient';
 import { normalize, moderateScale } from '../../utils/responsive';

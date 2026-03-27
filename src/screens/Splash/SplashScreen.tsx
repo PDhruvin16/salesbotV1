@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useRef } from "react";
 import { Animated, StatusBar, View } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import { Typography } from "../../components/Typography";
-import { useTheme } from "../../hooks/ThemeContext";
+import { useTheme } from "../../context/ThemeContext";
 import colors, { getThemeColors } from "../../utils/colors";
 import { getStyles } from "./SplashStyle";
 
